@@ -8,7 +8,7 @@ development:
   encoding: unicode
   database: migouploader_development
   pool: 5
-  username:
+  username: jojostory
   password:
 
 # Warning: The database defined as "test" will be erased and
@@ -19,7 +19,7 @@ test:
   encoding: unicode
   database: migouploader_test
   pool: 5
-  username:
+  username: jojostory
   password:
 
 production:
@@ -27,5 +27,5 @@ production:
   encoding: unicode
   database: migouploader_production
   pool: 5
-  username:
+  username: jojostory
   password:
