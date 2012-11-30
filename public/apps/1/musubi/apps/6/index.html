@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="http://mobisocial.stanford.edu/musubi/apps/SocialKit-JS/lib/socialKit-1.js"></script>
+	<script type="text/javascript" src="http://mobisocial.stanford.edu/musubi/apps/SocialKit-JS/jquery-1.5.2.min.js"></script>
+	<script type="text/javascript" src="http://jojo080889.github.com/Nose_Goes/musubi/apps/app.js"></script>
+		
+	<title>Start Page</title>
+	<style type="text/css">
+		body {
+			background-color: orange;
+		}
+		
+		#pressme {
+       		position: absolute;
+       		top: 380px;
+       		left: 40px;
+       	}
+		#pressme #highlight {
+			font-size: 47px;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<div id="pressme">
+		<span id="highlight">PRESS ME!</span>
+		<div>Press the Nose to play Nose Goes!</div>
+	</div>
+	<img src="http://jojo080889.github.com/Nose_Goes/musubi/apps/images/colored/nose_f9d589_start.png" id="the_nose">
+
+	<script type="text/javascript">
+		var speed = 200; // in milliseconds
+		var nextColor = 0; // keeps track of which color in the colorList array is being displayed
+		var colorList = ["red", "orange", "yellow", "green", "blue", "purple"];
+
+		function changeColor(){
+			$("#highlight").css("color", colorList[nextColor]);
+			nextColor++;
+			if (nextColor >= colorList.length) {
+				nextColor = 0;
+			}
+		}
+
+		function startColorEffect() {
+			setInterval("changeColor()", speed)
+		}
+
+		startColorEffect();
+	</script>
+</body>
+</html>
