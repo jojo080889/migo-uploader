@@ -2,8 +2,8 @@ class Upload < ActiveRecord::Base
   attr_accessible :upload, :project_id
   belongs_to :project
   has_attached_file :upload, 
-    :path => ":rails_root/public/apps/:user_id/musubi/apps/:project_id/:filename",
-    :url => "/apps/:user_id/musubi/apps/:project_id/:filename"
+    :path => ":rails_root/public/musubi/apps/:user_id/:project_id/:filename",
+    :url => "/musubi/apps/:user_id/:project_id/:filename"
 
   include Rails.application.routes.url_helpers
 

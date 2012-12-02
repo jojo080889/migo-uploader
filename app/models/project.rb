@@ -4,6 +4,6 @@ class Project < ActiveRecord::Base
   has_many :uploads
 
   def path
-    "apps/#{self.user_id}/musubi/apps/#{self.id}/"
+    "musubi/apps/#{self.user_id}/#{self.id}/"
   end
 end

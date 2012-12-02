@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  before_filter :authenticate_user!
+  
   # GET /projects
   # GET /projects.json
   def index
@@ -77,6 +79,13 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.json
   def destroy
     @project = Project.find(params[:id])
+    @files = Upload.find(:all, :conditions => { :project_id => params[:id] })
+
+    @files.each do |f|
+      f.upload = nil
+      f.save # to remove the actual file
+      f.delete # to remove the object from db
+    end
     @project.destroy
 
     respond_to do |format|

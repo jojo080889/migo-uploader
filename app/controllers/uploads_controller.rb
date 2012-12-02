@@ -42,6 +42,14 @@ class UploadsController < ApplicationController
   def create
     @upload = Upload.new(params[:upload])
 
+    # Check for an upload with the same project ID and filename
+    @old_upload = Upload.find(:first, 
+                              :conditions => {:project_id => @upload.project_id, :upload_file_name => @upload.upload_file_name})
+    if !@old_upload.nil?
+      @old_upload.update_attributes(params[:upload])       
+      @upload = @old_upload
+    end
+
     respond_to do |format|
       if @upload.save
         format.html {

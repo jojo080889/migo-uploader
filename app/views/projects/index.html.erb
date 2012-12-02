@@ -1,10 +1,12 @@
-<h1>Listing projects</h1>
+<h1>My Projects</h1>
 
 <% if !user_signed_in? %>
-  Please sign in!
+  Please sign in to manage your Musubi projects!
 <% else %>
-  <% if @projects.nil? %>
-    You don't have any projects!
+  <%= button_to 'New Project', new_project_path, :method => :get, :class => "btn btn-primary" %>
+  
+  <% if @projects.nil? || @projects.empty? %>
+    You don't have any projects yet.
   <% else %>
     <table>
       <tr>
@@ -24,8 +26,4 @@
     <% end %>
     </table>
   <% end %>
-
-  <br />
-
-  <%= link_to 'New Project', new_project_path %>
 <% end %>

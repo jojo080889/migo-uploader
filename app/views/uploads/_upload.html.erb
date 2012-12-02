@@ -1,15 +1,21 @@
-<div>
-  <h2>Upload file</h2>
+<div id="manage-files-container">
+<div id="dropzone-container">
+  <h3>File Drop Zone</h3>
+  <div id="dropzone" class="fade well">Drag &amp; Drop Files Here</div>
+</div>
+
+<div id="files-container">
+  <h3>Manage Project Files</h3>
   <%= form_for Upload.new, :html => { :multipart => true, :id => "fileupload"  } do |f| %>
     <%= f.hidden_field :project_id, :value => project_id %>
     <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
     <div class="row fileupload-buttonbar">
       <div class="span7">
         <!-- The fileinput-button span is used to style the file input field as button -->
-        <span class="btn btn-success fileinput-button">
+        <span class="btn btn-success fileinput-button" style="position:relative;">
           <i class="icon-plus icon-white"></i>
           <span>Add files...</span>
-          <%= f.file_field :upload, :style => 'display:none;' %>
+          <%= f.file_field :upload, :style => 'position:absolute; top:0; bottom: 0; left: 0; right: 0; opacity: 0; font-size: 23px; direction: ltr; cursor: pointer;' %>
         </span>
         <button type="submit" class="btn btn-primary start">
           <i class="icon-upload icon-white"></i>
@@ -40,6 +46,7 @@
     </table>
   <% end %>
 
+</div>
 </div>
 <script>
   var fileUploadErrors = {
@@ -116,7 +123,15 @@
 <script type="text/javascript" charset="utf-8">
   $(function () {
       // Initialize the jQuery File Upload widget:
-      $('#fileupload').fileupload();
+      $('#fileupload').fileupload({
+        dropZone: $('#dropzone')
+      }).bind('fileuploaddone', function(e, data) {
+        console.log("done!")
+        for (var i = 0; i < data.files.length; i++) {
+          $($("a[title='" + data.files[i].name + "']").parent().parent()[0]).remove();
+        }  
+      });
+
       // 
       // Load existing files:
       $.getJSON($('#fileupload').prop('action'), function (files) {
@@ -136,5 +151,27 @@
         $('#loading').remove();
       });
 
+      // Initialize dropzone
+      $(document).bind('dragover', function (e) {
+        var dropZone = $('#dropzone'),
+          timeout = window.dropZoneTimeout;
+        if (!timeout) {
+          dropZone.addClass('in');
+        } else {
+          clearTimeout(timeout);
+        }
+        if (e.target === dropZone[0]) {
+          dropZone.addClass('hover');
+        } else {
+          dropZone.removeClass('hover');
+        }
+        window.dropZoneTimeout = setTimeout(function () {
+          window.dropZoneTimeout = null;
+          dropZone.removeClass('in hover');
+        }, 100);
+      });
+      $(document).bind('drop dragover', function (e) {
+        e.preventDefault();
+      });
   });
 </script>
